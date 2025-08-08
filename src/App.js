@@ -106,9 +106,21 @@ const App = () => {
   const ProjectCard = ({ project, index }) => {
     const [isHovered, setIsHovered] = useState(false);
 
+    const handleLiveDemo = () => {
+      if (project.demo || project.link) {
+        window.open(project.demo || project.link, '_blank', 'noopener,noreferrer');
+      }
+    };
+
+    const handleGithub = () => {
+      if (project.github) {
+        window.open(project.github, '_blank', 'noopener,noreferrer');
+      }
+    };
+
     return (
       <motion.div
-        className="group relative bg-slate-800/30 backdrop-blur-lg border border-slate-700 rounded-3xl overflow-hidden"
+        className="group relative bg-slate-800/30 backdrop-blur-lg border border-slate-700 rounded-3xl overflow-hidden cursor-pointer"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -116,6 +128,7 @@ const App = () => {
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         whileHover={{ y: -15, scale: 1.02 }}
+        onClick={handleLiveDemo} // Make entire card clickable
       >
         {/* Interactive Demo Area */}
         <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
@@ -163,6 +176,22 @@ const App = () => {
               {project.icon}
             </motion.div>
           </div>
+
+          {/* Hover overlay with "View Project" */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center z-20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-full px-6 py-3 text-white font-semibold">
+                  View Project
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="p-6">
@@ -175,6 +204,12 @@ const App = () => {
                 className="p-2 rounded-lg bg-slate-700/50 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/20 transition"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click
+                  handleLiveDemo();
+                }}
+                disabled={!project.demo && !project.link}
+                title="View Live Demo"
               >
                 <FaExternalLinkAlt size={14} />
               </motion.button>
@@ -182,6 +217,12 @@ const App = () => {
                 className="p-2 rounded-lg bg-slate-700/50 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/20 transition"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click
+                  handleGithub();
+                }}
+                disabled={!project.github}
+                title="View Source Code"
               >
                 <FaGithub size={14} />
               </motion.button>
@@ -192,12 +233,12 @@ const App = () => {
 
           {/* Tech stack badges */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.technologies?.map(tech => (
+            {project.tags?.map(tag => (
               <span
-                key={tech}
+                key={tag}
                 className="px-3 py-1 rounded-full text-xs bg-gradient-to-r from-indigo-500/20 to-emerald-500/20 text-indigo-300 border border-indigo-500/30"
               >
-                {tech}
+                {tag}
               </span>
             ))}
           </div>
@@ -213,10 +254,26 @@ const App = () => {
               ))}
             </div>
           )}
+
+          {/* Project status indicator */}
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
+            <div className="flex items-center text-xs">
+              <div className={`w-2 h-2 rounded-full mr-2 ${project.demo || project.link ? 'bg-green-400' : 'bg-yellow-400'}`}></div>
+              <span className="text-slate-400">
+                {project.demo || project.link ? 'Live' : 'In Development'}
+              </span>
+            </div>
+            {(project.demo || project.link) && (
+              <span className="text-xs text-emerald-400 font-medium">
+                Click to view →
+              </span>
+            )}
+          </div>
         </div>
       </motion.div>
     );
   };
+
 
   // Enhanced Contact Form
   const ContactForm = () => {
@@ -339,73 +396,61 @@ const App = () => {
       link: 'https://dew-astra.vercel.app/',
       description: 'AI-powered sales automation platform with voice agents that handle lead qualification, follow-ups, and customer care. Built emotionally intelligent, human-sounding AI personas to scale outreach and boost conversion rates. Led product development, go-to-market strategy, and team operations.',
       tags: ['nlp', 'Agentic framework'],
-      // technologies: ['PyTorch', 'HuggingFace', 'FastAPI', 'Docker'],
-      github: <a href="https://github.com/yourusername/dew-astra">GitHub</a>,
+      github: 'https://github.com/yourusername/dew-astra', // Add your actual GitHub link
       demo: 'https://dew-astra.vercel.app/',
       icon: <FaRobot className="text-indigo-400 text-2xl" />,
       color: 'from-indigo-500 to-indigo-600',
-      // metrics: [
-      //   { value: '12', label: 'Languages' },
-      //   { value: '95%', label: 'Accuracy' }
-      // ]
-    }
-    ,
+    },
     {
       id: 2,
       title: 'Jewelry website',
-      description: 'Designed and developed a responsive website for a jewelry brand, showcasing product collectionsp learning system for detecting anomalies in medical scans with 98% accuracy, reducing diagnosis time.',
+      description: 'Designed and developed a responsive website for a jewelry brand, showcasing product collections with modern design and responsive layout.',
       tags: ['React', 'js'],
-      // technologies: ['TensorFlow', 'OpenCV', 'Flask', 'AWS'],
-      github: 'https://jewl-alpha.vercel.app/',
+      github: 'https://github.com/yourusername/jewelry-website', // Add placeholder or real link
       demo: 'https://jewl-alpha.vercel.app/',
+      link: 'https://jewl-alpha.vercel.app/',
       icon: <FaEye className="text-emerald-400 text-2xl" />,
       color: 'from-emerald-500 to-emerald-600',
-      // metrics: [
-      //   { value: '98%', label: 'Accuracy' },
-      //   { value: '40%', label: 'Faster' }
-      // ]
     },
     {
       id: 3,
       title: 'Creative AI Artist',
-      description: 'Generate consitent character artworks using GANs and CLIP, enabling artists to create unique styles and characters.',
+      description: 'Generate consistent character artworks using GANs and CLIP, enabling artists to create unique styles and characters.',
       tags: ['genai', 'gans'],
-      // technologies: ['PyTorch', 'CLIP', 'Gradio', 'GCP'],
+      github: 'https://github.com/yourusername/creative-ai-artist', // Add placeholder
+      demo: 'https://your-demo-link.vercel.app/', // Add placeholder
+      link: 'https://your-demo-link.vercel.app/', // Add placeholder
       icon: <FaPalette className="text-purple-400 text-2xl" />,
       color: 'from-purple-500 to-purple-600',
-      // metrics: [
-      //   { value: '1M+', label: 'Artworks' },
-      //   { value: '512x512', label: 'Resolution' }
-      // ]
     },
     {
       id: 4,
-      title: 'Autonomous Trading Agent',
-      description: 'Reinforcement learning system that makes trading decisions based on market patterns and news sentiment.',
-      tags: ['rl', 'finance'],
-      technologies: ['PyTorch', 'Gym', 'Redis', 'Kubernetes'],
+      title: 'BrandBrandAI',
+      description: 'AI-powered platform that generates personalized brand strategies, including logos, color schemes, and marketing content, tailored to client needs.',
+      tags: ['nlp', 'genai'],
+      github: 'https://github.com/yourusername/brandbrand-ai', // Add placeholder
+      demo: 'https://huggingface.co/spaces/kapildew18/BrandBrainAI', // Add placeholder
+      link: 'https://huggingface.co/spaces/kapildew18/BrandBrainAI', // Add placeholder
       icon: <FaBrain className="text-amber-400 text-2xl" />,
       color: 'from-amber-500 to-amber-600',
-      metrics: [
-        { value: '23%', label: 'ROI' },
-        { value: '0.15', label: 'Sharpe Ratio' }
-      ]
+      // metrics: [
+      //   { value: '23%', label: 'ROI' },
+      //   { value: '0.15', label: 'Sharpe Ratio' }
+      // ]
     },
     {
-      id: 6,
-      title: 'Smart Code Assistant',
-      description: 'AI-powered code completion and bug detection system that helps developers write better code faster.',
+      id: 5,
+      title: 'LinkedIn post generator',
+      description: 'AI-powered tool that generates engaging LinkedIn posts based on user input and trending topics, helping professionals boost their online presence.',
       tags: ['nlp', 'dev-tools'],
-      technologies: ['CodeT5', 'VS Code API', 'Node.js', 'MongoDB'],
+      github: 'https://github.com/yourusername/linkedin-post-generator', // Add placeholder
+      demo: 'https://huggingface.co/spaces/kapildew18/LinkdinPostGeneratorAI', // Add placeholder
+      link: 'https://huggingface.co/spaces/kapildew18/LinkdinPostGeneratorAI', // Add placeholder
       icon: <FaCode className="text-green-400 text-2xl" />,
       color: 'from-green-500 to-green-600',
-      metrics: [
-        { value: '60%', label: 'Faster' },
-        { value: '85%', label: 'Bug Detection' }
-      ]
     },
-
   ];
+
 
   // Navigation items
   const navItems = [
