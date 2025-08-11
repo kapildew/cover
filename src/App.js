@@ -779,9 +779,16 @@ const App = () => {
                 className="bg-slate-800/50 backdrop-blur-lg hover:bg-slate-700/50 font-semibold py-3 px-8 rounded-xl flex items-center transition-all duration-300 border border-slate-700"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/resumekdd.pdf';
+                  link.download = 'resumekdd.pdf';
+                  link.click();
+                }}
               >
                 <FaDownload className="mr-3" /> Download CV
               </motion.button>
+
             </motion.div>
           </motion.div>
 
@@ -992,8 +999,13 @@ const App = () => {
                       <FaGraduationCap className="text-white" />
                     </div>
                     <div>
+                      <h5 className="font-bold">B.Tech in Computer Science engineering </h5>
+                      <p className="text-slate-300">Kalinga Institute of Industrial Technology, 2021-2023</p>
+                      <p className="text-slate-400 text-sm"></p>
+                    </div>
+                    <div>
                       <h5 className="font-bold">B.Tech in Computer Science engineering specialized in Artificial Intelligence and Machine Learning</h5>
-                      <p className="text-slate-300">Kalinga Institute of Industrial Technology, 2025</p>
+                      <p className="text-slate-300">KK Modi University, 2023-2025</p>
                       <p className="text-slate-400 text-sm">Thesis: "AI powered voice sales data assistant"</p>
                     </div>
                   </div>
