@@ -993,27 +993,41 @@ const App = () => {
                   <FaGraduationCap className="mr-2" />
                   Education
                 </h4>
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* First Degree */}
                   <div className="flex items-start">
-                    <div className="bg-gradient-to-br from-indigo-500 to-emerald-500 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                    <div className="bg-gradient-to-br from-indigo-500 to-emerald-500 w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
                       <FaGraduationCap className="text-white" />
                     </div>
                     <div>
-                      <h5 className="font-bold">B.Tech in Computer Science engineering </h5>
-                      <p className="text-slate-300">Kalinga Institute of Industrial Technology, 2021-2023</p>
-                      <p className="text-slate-400 text-sm"></p>
-                    </div>
-                    <div>
-                      <h5 className="font-bold">B.Tech in Computer Science engineering specialized in Artificial Intelligence and Machine Learning</h5>
-                      <p className="text-slate-300">KK Modi University, 2023-2025</p>
+                      <h5 className="font-bold text-white">B.Tech in Computer Science Engineering (AI & ML)</h5>
+                      <p className="text-emerald-300 font-medium">KK Modi University</p>
+                      <p className="text-slate-400 text-sm mb-2">2023 - 2025</p>
+                      {/* <p className="text-slate-300 text-sm">Specialization: Artificial Intelligence and Machine Learning</p> */}
                       <p className="text-slate-400 text-sm">Thesis: "AI powered voice sales data assistant"</p>
                     </div>
                   </div>
-                  <div className="flex items-start">
 
+                  {/* Second Degree */}
+                  <div className="flex items-start">
+                    <div className="bg-gradient-to-br from-purple-500 to-pink-500 w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                      <FaGraduationCap className="text-white" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-white">B.Tech in Computer Science Engineering</h5>
+                      <p className="text-emerald-300 font-medium">Kalinga Institute of Industrial Technology (KIIT)</p>
+                      <p className="text-slate-400 text-sm mb-2">2021 - 2023</p>
+                      {/* <p className="text-slate-300 text-sm">Foundation in Computer Science and Programming</p> */}
+                      {/* <p className="text-slate-400 text-sm">Core subjects: Data Structures, Algorithms, Database Management</p> */}
+                    </div>
                   </div>
+
+
+
+
                 </div>
               </motion.div>
+
 
               {/* Certifications */}
               <motion.div
